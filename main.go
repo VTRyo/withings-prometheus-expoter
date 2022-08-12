@@ -37,7 +37,7 @@ func main() {
 	go func() {
 		setValue()
 	}()
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":8181", nil))
 }
 
 func setValue() {

@@ -116,7 +116,7 @@ func GetFat() withings.MeasureData {
 }
 
 func SetToken() {
-	settings = withings.ReadSettings(".test_settings.yaml")
+	settings = withings.ReadSettings("settings.yaml")
 
 	auth(settings)
 	tokenFuncs()
