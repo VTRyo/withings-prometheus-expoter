@@ -97,26 +97,26 @@ func printMeas(v withings.MeasureData) {
 	fmt.Printf("%.1f\n", v.Value)
 }
 
-func getWeight() {
+func getWeight() float64 {
 	mym, err := client.GetMeas(withings.Real, adayago, t, lastupdate, 0, false, true, withings.Weight, withings.Height, withings.FatFreeMass, withings.BoneMass, withings.FatRatio, withings.FatMassWeight, withings.Temp, withings.HeartPulse, withings.Hydration)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	for _, v := range mym.SerializedData.Weights {
-		fmt.Println(v.Value)
-	}
+	// 最新のデータを取得する
+	weight := mym.SerializedData.Weights[0].Value
+	return weight
 }
 
-func getFat() {
+func getFat() float64 {
 	mym, err := client.GetMeas(withings.Real, adayago, t, lastupdate, 0, false, true, withings.Weight, withings.Height, withings.FatFreeMass, withings.BoneMass, withings.FatRatio, withings.FatMassWeight, withings.Temp, withings.HeartPulse, withings.Hydration)
 	if err != nil {
 		fmt.Println(err)
 	}
 
-	for _, v := range mym.SerializedData.FatRatios {
-		fmt.Println(v)
-	}
+	// 最新のデータを取得する
+	fat := mym.SerializedData.FatRatios[0].Value
+	return fat
 }
 
 func GetInfo() {
@@ -127,4 +127,5 @@ func GetInfo() {
 	mainSetup()
 
 	getWeight()
+	getFat()
 }
