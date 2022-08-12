@@ -93,39 +93,32 @@ func mainSetup() {
 	//lastupdate = time.Date(2020, 12, 20, 0, 0, 0, 0, time.UTC)
 }
 
-func printMeas(v withings.MeasureData) {
-	fmt.Printf("%.1f\n", v.Value)
-}
-
-func getWeight() float64 {
+func GetWeight() withings.MeasureData {
 	mym, err := client.GetMeas(withings.Real, adayago, t, lastupdate, 0, false, true, withings.Weight, withings.Height, withings.FatFreeMass, withings.BoneMass, withings.FatRatio, withings.FatMassWeight, withings.Temp, withings.HeartPulse, withings.Hydration)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	// 最新のデータを取得する
-	weight := mym.SerializedData.Weights[0].Value
-	return weight
+	weightInfo := mym.SerializedData.Weights[0]
+	return weightInfo
 }
 
-func getFat() float64 {
+func GetFat() withings.MeasureData {
 	mym, err := client.GetMeas(withings.Real, adayago, t, lastupdate, 0, false, true, withings.Weight, withings.Height, withings.FatFreeMass, withings.BoneMass, withings.FatRatio, withings.FatMassWeight, withings.Temp, withings.HeartPulse, withings.Hydration)
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	// 最新のデータを取得する
-	fat := mym.SerializedData.FatRatios[0].Value
-	return fat
+	fatInfo := mym.SerializedData.FatRatios[0]
+	return fatInfo
 }
 
-func GetInfo() {
+func SetToken() {
 	settings = withings.ReadSettings(".test_settings.yaml")
 
 	auth(settings)
 	tokenFuncs()
 	mainSetup()
-
-	getWeight()
-	getFat()
 }
