@@ -14,8 +14,6 @@ RUN go build \
 
 FROM alpine:latest as runner
 RUN apk add curl
-COPY settings.yaml access_token.json /
-RUN chmod 766 access_token.json
 COPY --from=builder /go/bin/withings-prometheus-expoter /app/withings-prometheus-expoter
 
 # don't create homeDir.
