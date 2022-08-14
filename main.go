@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	weightGage = promauto.NewGaugeVec(
+	weightGauge = promauto.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Namespace: "withings",
 			Name:      "weight",
@@ -20,7 +20,7 @@ var (
 		}, []string{"device_id"},
 	)
 
-	fatGage = promauto.NewGaugeVec(
+	fatGauge = promauto.NewGaugeVec(
 		prometheus.GaugeOpts{
 			Namespace: "withings",
 			Name:      "fat_rate",
@@ -30,8 +30,8 @@ var (
 )
 
 func main() {
-	prometheus.Register(weightGage)
-	prometheus.Register(fatGage)
+	prometheus.Register(weightGauge)
+	prometheus.Register(fatGauge)
 
 	http.Handle("/metrics", promhttp.Handler())
 	go func() {
@@ -52,7 +52,7 @@ func setValue() {
 		"device_id": withings.GetFat().DeviceID,
 	}
 
-	weightGage.With(weightLabels).Set(weight)
-	fatGage.With(fatLabels).Set(fat)
+	weightGauge.With(weightLabels).Set(weight)
+	fatGauge.With(fatLabels).Set(fat)
 	time.Sleep(86400 * time.Second) // 1日間隔
 }
